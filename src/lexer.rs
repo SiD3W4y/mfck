@@ -67,15 +67,17 @@ impl Lexer {
     pub fn process_string(&mut self,data: String){
         let chunks = self.split_string(data);
 
-        for chk in chunks {
-            match chk.as_ref() {
-                "<-" => self.add_token(Token::Assign),
-                "+" | "-" | "*" => self.add_token(Token::Operator(chk.to_owned())),
-                "if" => self.add_token(Token::If),
-                "while" => self.add_token(Token::While),
-                x if u32::from_str(x).is_ok() => self.add_token(Token::Number(u32::from_str(x).unwrap())), 
-                _ => self.add_token(Token::Symbol(chk.to_owned()))
-            }
+        for chk in chunks.iter() {
+            let tok = match chk.as_ref() {
+                "<-" => Token::Assign,
+                "+" | "-" | "*" => Token::Operator(chk.to_owned()),
+                "if" => Token::If,
+                "while" => Token::While,
+                x if u32::from_str(x).is_ok() => Token::Number(u32::from_str(x).unwrap()), 
+                _ => Token::Symbol(chk.to_owned())
+            };
+
+            self.add_token(tok);
         }
     }
 }
