@@ -1,0 +1,6 @@
+[package]
+name = "mfck"
+version = "0.1.0"
+authors = ["Sideway <dev.sideway@gmail.com>"]
+
+[dependencies]
